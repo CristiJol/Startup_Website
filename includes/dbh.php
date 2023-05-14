@@ -3,7 +3,7 @@
 // se face conexiunea la baza de date
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "Fucklove2002.";
 $dbname = "uso";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -14,15 +14,15 @@ if ($conn->connect_error) {
 }
 
 // se verifică dacă butonul a fost apăsat
-if(isset($_POST['submitButton'])) {
+if(isset($_POST['name'])) {
   
   // se preiau datele din formular
   $name = $_POST['name'];
   $email = $_POST['email'];
-  $options = implode(", ", $_POST['options']);
+  $options = $_POST['options'];
   
   // se creează interogarea SQL pentru inserarea datelor în baza de date
-  $sql = "INSERT INTO users (Nume, Email, Departament) VALUES ('$name', '$email', '$options')";
+  $sql = "INSERT INTO users_registration (Nume, Email, Departament) VALUES ('$name', '$email', '$options')";
   
   // se verifică dacă interogarea a avut loc cu succes
   if ($conn->query($sql) === TRUE) {
@@ -36,25 +36,4 @@ if(isset($_POST['submitButton'])) {
 }
 ?>
 
-<!-- se afișează formularul pentru utilizator -->
-<div class="work-request--form">
-  <form method="post">
-    <div class="work-request--information">
-      <div class="information-name">
-        <input id="name" type="text" name="name" spellcheck="false">
-        <label for="name">Nume</label>
-      </div>
-      <div class="information-email">
-        <input id="email" type="email" name="email" spellcheck="false">
-        <label for="email">Email</label>
-      </div>
-    </div>
-    <div class="work-request--options">
-      <h3>Opțiuni</h3>
-      <input type="checkbox" name="options[]" value="opțiunea 1"> Opțiunea 1<br>
-      <input type="checkbox" name="options[]" value="opțiunea 2"> Opțiunea 2<br>
-      <input type="checkbox" name="options[]" value="opțiunea 3"> Opțiunea 3<br>
-    </div>
-    <input id="submitButton" type="submit" name="submitButton" value="Înscrie-te!">
-  </form>
-</div>
+

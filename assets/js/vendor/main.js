@@ -1,29 +1,6 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-} from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
-
-// TODO: Replace the following with your app's Firebase project configuration
-// See: https://support.google.com/firebase/answer/7015592
-const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  databaseURL: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: "",
-};
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-// Initialize Cloud Firestore and get a reference to the service
-const database = getFirestore(app);
-
 // Get form element
 const form = document.querySelector("form");
+const submitButton = document.querySelector("#submitButton");
 
 // Get option checkboxes
 const marketing = document.querySelector("#opt-1");
@@ -57,19 +34,21 @@ const getSelectedOptions = () => {
 // Send data to firestore
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+});
+
+submitButton.addEventListener("click", (e) => {
+  e.preventDefault();
   const domains = getSelectedOptions();
   const name = document.querySelector("#name").value;
   const email = document.querySelector("#email").value;
 
-  addDoc(collection(database, "registrations"), {
-    name,
-    email,
-    domains,
-  })
-    .then(() => {
-      console.log("success");
-    })
-    .catch((error) => {
-      console.error("error", error);
-    });
+  formData = new FormData();
+  formData.append("name", name);
+  formData.append("email", email);
+  formData.append("options", domains);
+
+  fetch("/Startup_Website/includes/dbh.php", { method: "POST", body: formData }).then((response) =>
+    response.text()
+  ).then((responseData) =>console.log(responseData));
+
 });
